@@ -4,6 +4,8 @@
 -- You can think of a Lua "table" as a dictionary like data structure the
 -- normal format is "key = value". These also handle array like data structures
 -- where a value with no key simply has an implicit numeric key
+--
+
 local config = {
 
   -- Configure AstroNvim updates
@@ -135,6 +137,8 @@ local config = {
 
     -- Add overrides for LSP server settings, the keys are the name of the server
     ["server-settings"] = {
+      asm_lsp = {
+      },
       -- example for addings schemas to yamlls
       -- yamlls = { -- override table for require("lspconfig").yamlls.setup({...})
       --   settings = {
@@ -231,6 +235,18 @@ local config = {
       end
       return config -- return final config table to use in require("null-ls").setup(config)
     end,
+
+    cmp = function(opts)
+      -- opts parameter is the default options table
+      -- the function is lazy loaded so cmp is able to be required
+      local cmp = require "cmp"
+      -- modify the mapping part of the table
+      opts.mapping["<Tab>"] = cmp.mapping.confirm { select = true }
+
+      -- return the new table to be used
+      return opts
+    end,
+
     treesitter = { -- overrides `require("treesitter").setup(...)`
       ensure_installed = { "lua" },
     },
@@ -263,14 +279,6 @@ local config = {
   -- The value can also be set to a boolean for disabling default sources:
   -- false == disabled
   -- true == 1000
-  cmp = {
-    source_priority = {
-      nvim_lsp = 1000,
-      luasnip = 750,
-      buffer = 500,
-      path = 250,
-    },
-  },
 
   -- Modify which-key registration (Use this with mappings table in the above.)
   ["which-key"] = {
