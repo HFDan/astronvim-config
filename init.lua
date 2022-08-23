@@ -6,6 +6,11 @@
 -- where a value with no key simply has an implicit numeric key
 --
 
+-- if vim.api.nvim_eval "g:neovide" then
+--   vim.api.nvim_eval "let g:neovide_refresh_rate=240"
+--   vim.api.nvim_eval 'let g:neovide_cursor_vfx_mode="Railgun"'
+-- end
+
 local config = {
 
   -- Configure AstroNvim updates
@@ -137,8 +142,7 @@ local config = {
 
     -- Add overrides for LSP server settings, the keys are the name of the server
     ["server-settings"] = {
-      asm_lsp = {
-      },
+      asm_lsp = {},
       -- example for addings schemas to yamlls
       -- yamlls = { -- override table for require("lspconfig").yamlls.setup({...})
       --   settings = {
